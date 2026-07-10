@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#fafafb" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#07070a" media="(prefers-color-scheme: dark)" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- ============================================================= -->
+<!--  EDIT ME: Page title shown in the browser tab                 -->
+<!-- ============================================================= -->
+<title>House of Misfits Wrestling</title>
+
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('tp-theme');
+    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var effective = t || (sysDark ? 'dark' : 'light');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.setAttribute('data-effective-theme', effective);
+  } catch (e) {}
+})();
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  color-scheme: light dark;
+  --bg:#fafafb; --bg-tint:#f4f4f7; --surface:#ffffff; --surface-2:#f7f7f9;
+  --border:#e6e6ec; --border-strong:#d2d2da; --text:#0a0a0d; --text-strong:#000000;
+  --muted:#6b6b78; --muted-2:#93939e;
+  --accent:#e1112a; --accent-soft:rgba(225,17,42,0.10); --accent-glow:rgba(225,17,42,0.18);
+  --grid-dot:rgba(10,10,13,0.045); --hairline:rgba(10,10,13,0.06);
+  --shadow-sm:0 1px 2px rgba(10,10,13,0.04); --shadow-md:0 4px 16px rgba(10,10,13,0.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:18px;
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#07070a; --bg-tint:#0b0b10; --surface:#0f0f15; --surface-2:#14141b;
+    --border:#1d1d26; --border-strong:#2c2c38; --text:#e8e8ee; --text-strong:#ffffff;
+    --muted:#7a7a87; --muted-2:#5a5a65;
+    --accent:#ff2742; --accent-soft:rgba(255,39,66,0.12); --accent-glow:rgba(255,39,66,0.28);
+    --grid-dot:rgba(255,255,255,0.04); --hairline:rgba(255,255,255,0.06);
+    --shadow-sm:0 1px 2px rgba(0,0,0,0.4); --shadow-md:0 8px 24px rgba(0,0,0,0.45);
+  }
+}
+[data-theme="light"] {
+  color-scheme:light;
+  --bg:#fafafb; --bg-tint:#f4f4f7; --surface:#ffffff; --surface-2:#f7f7f9;
+  --border:#e6e6ec; --border-strong:#d2d2da; --text:#0a0a0d; --text-strong:#000000;
+  --muted:#6b6b78; --muted-2:#93939e;
+  --accent:#e1112a; --accent-soft:rgba(225,17,42,0.10); --accent-glow:rgba(225,17,42,0.18);
+  --grid-dot:rgba(10,10,13,0.045); --hairline:rgba(10,10,13,0.06);
+  --shadow-sm:0 1px 2px rgba(10,10,13,0.04); --shadow-md:0 4px 16px rgba(10,10,13,0.06);
+}
+[data-theme="dark"] {
+  color-scheme:dark;
+  --bg:#07070a; --bg-tint:#0b0b10; --surface:#0f0f15; --surface-2:#14141b;
+  --border:#1d1d26; --border-strong:#2c2c38; --text:#e8e8ee; --text-strong:#ffffff;
+  --muted:#7a7a87; --muted-2:#5a5a65;
+  --accent:#ff2742; --accent-soft:rgba(255,39,66,0.12); --accent-glow:rgba(255,39,66,0.28);
+  --grid-dot:rgba(255,255,255,0.04); --hairline:rgba(255,255,255,0.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.4); --shadow-md:0 8px 24px rgba(0,0,0,0.45);
+}
+html, body {
+  margin:0; padding:0; background:var(--bg); color:var(--text);
+  font-family:var(--font-sans); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%; min-height:100%;
+}
+body {
+  position:relative;
+  background-image:radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size:24px 24px; background-position:0 0;
+}
+body::before {
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background:radial-gradient(800px 500px at 85% -10%, var(--accent-glow), transparent 60%),
+             radial-gradient(600px 400px at -10% 110%, var(--accent-soft), transparent 60%);
+  opacity:0.7; z-index:0;
+}
+main, header, footer { position:relative; z-index:1; }
+a { color:inherit; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+button { font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+::selection { background:var(--accent); color:#fff; }
+.container { max-width:960px; margin:0 auto; padding:1.25rem; }
+
+/* ---- Header ---- */
+.site-header {
+  position:sticky; top:0; z-index:10;
+  background:color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter:saturate(180%) blur(14px); -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--hairline);
+}
+.header-inner { display:flex; align-items:center; justify-content:space-between; padding-top:0.75rem; padding-bottom:0.75rem; gap:1rem; }
+.brand { display:inline-flex; align-items:center; gap:0.6rem; font-weight:700; font-size:0.92rem; color:var(--text-strong); }
+.brand-mark { position:relative; display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:6px; overflow:hidden;
+  background:linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #ff8aa0));
+  box-shadow:0 0 0 1px var(--hairline), 0 6px 18px var(--accent-glow); }
+.brand-mark img { width:100%; height:100%; object-fit:cover; }
+.brand-text { font-family:var(--font-mono); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.18em; font-weight:600; }
+.header-right { display:flex; align-items:center; gap:0.4rem; }
+nav { display:flex; gap:0.1rem; align-items:center; }
+nav a { padding:0.45rem 0.8rem; border-radius:8px; color:var(--muted); font-size:0.88rem; font-weight:500; transition:color 0.15s, background 0.15s; }
+nav a:hover { color:var(--text-strong); }
+.theme-toggle { width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; color:var(--muted); transition:color 0.15s, background 0.15s; }
+.theme-toggle:hover { color:var(--text-strong); background:var(--surface); }
+.theme-toggle svg { width:18px; height:18px; }
+.theme-toggle .icon-sun { display:none; }
+.theme-toggle .icon-moon { display:block; }
+[data-effective-theme="dark"] .theme-toggle .icon-sun { display:block; }
+[data-effective-theme="dark"] .theme-toggle .icon-moon { display:none; }
+
+/* ---- Buttons ---- */
+.btn { display:inline-flex; align-items:center; gap:0.5rem; padding:0.7rem 1.3rem; border-radius:999px; font-weight:600; font-size:0.92rem; letter-spacing:0.01em; transition:transform 0.05s, border-color 0.15s, background 0.15s, box-shadow 0.15s; }
+.btn:active { transform:scale(0.98); }
+.btn-primary { background:var(--accent); color:#fff; box-shadow:0 6px 20px var(--accent-glow); }
+.btn-primary:hover { box-shadow:0 8px 26px var(--accent-glow); }
+.btn-ghost { background:var(--surface); color:var(--text-strong); border:1px solid var(--border); box-shadow:var(--shadow-sm); }
+.btn-ghost:hover { border-color:var(--accent); }
+
+/* ---- Eyebrow ---- */
+.eyebrow { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+.eyebrow::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); animation:pulse 2.6s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow:0 0 0 3px var(--accent-soft); } 50% { box-shadow:0 0 0 6px transparent; } }
+
+/* ---- Hero ---- */
+.hero { display:grid; grid-template-columns:1.1fr 0.9fr; gap:2.5rem; align-items:center; padding:3.5rem 0 2.5rem; }
+.hero-logo { display:inline-flex; align-items:center; justify-content:center; width:66px; height:66px; border-radius:16px; overflow:hidden; margin-bottom:1.4rem;
+  background:linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #ff8aa0));
+  box-shadow:0 0 0 1px var(--hairline), 0 10px 30px var(--accent-glow); }
+.hero-logo img { width:100%; height:100%; object-fit:cover; }
+h1.hero-title { font-size:3.1rem; margin:0.4rem 0 0.6rem; font-weight:800; letter-spacing:-0.03em; color:var(--text-strong); line-height:1.02; }
+h1.hero-title .accent { color:var(--accent); }
+.hero-tagline { color:var(--muted); font-size:1.12rem; max-width:44ch; margin:0 0 1.9rem; }
+.hero-cta { display:flex; flex-wrap:wrap; gap:0.8rem; }
+.hero-visual { position:relative; }
+.image-placeholder {
+  position:relative; width:100%; aspect-ratio:4/5; border-radius:var(--radius-lg);
+  background:var(--surface-2); border:1px dashed var(--border-strong);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem;
+  color:var(--muted-2); overflow:hidden; box-shadow:var(--shadow-md);
+}
+.image-placeholder img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.image-placeholder .ph-icon { width:34px; height:34px; opacity:0.5; }
+.image-placeholder .ph-label { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; }
+
+/* ---- Stats strip ---- */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem; margin:0.5rem 0 3rem; }
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.2rem 1.3rem; box-shadow:var(--shadow-sm); }
+.stat .num { font-size:2rem; font-weight:800; color:var(--text-strong); letter-spacing:-0.02em; }
+.stat .num .accent { color:var(--accent); }
+.stat .label { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:0.2rem; }
+
+/* ---- Section ---- */
+.section { padding:2.5rem 0; }
+.section-head { max-width:60ch; margin-bottom:1.8rem; }
+h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; letter-spacing:-0.025em; color:var(--text-strong); line-height:1.1; }
+.section-sub { color:var(--muted); font-size:1rem; margin:0; }
+
+/* ---- Feature cards ---- */
+.feature-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:0.85rem; }
+.feature-card { position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.4rem 1.5rem; overflow:hidden; transition:border-color 0.15s; }
+.feature-card::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, transparent, var(--accent-soft)); opacity:0; transition:opacity 0.2s; }
+@media (hover: hover) { .feature-card:hover { border-color:var(--accent); } .feature-card:hover::before { opacity:1; } }
+.feature-icon { position:relative; z-index:1; display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; background:var(--accent-soft); color:var(--accent); margin-bottom:0.9rem; }
+.feature-icon svg { width:20px; height:20px; }
+.feature-card h3 { position:relative; z-index:1; margin:0 0 0.4rem; font-size:1.1rem; font-weight:700; color:var(--text-strong); letter-spacing:-0.01em; }
+.feature-card p { position:relative; z-index:1; margin:0; color:var(--muted); font-size:0.94rem; }
+
+/* ---- Coaches ---- */
+.coach-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:0.85rem; }
+.coach-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.2rem; text-align:center; transition:border-color 0.15s; }
+@media (hover: hover) { .coach-card:hover { border-color:var(--accent); } }
+.coach-avatar { width:84px; height:84px; border-radius:50%; margin:0 auto 0.85rem; overflow:hidden; background:var(--surface-2); border:1px dashed var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--muted-2); }
+.coach-avatar img { width:100%; height:100%; object-fit:cover; }
+.coach-avatar .ph-icon { width:26px; height:26px; opacity:0.5; }
+.coach-card h3 { margin:0 0 0.15rem; font-size:1rem; font-weight:700; color:var(--text-strong); }
+.coach-card .role { font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); }
+
+/* ---- Gallery ---- */
+.gallery { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:0.6rem; }
+.gallery .image-placeholder { aspect-ratio:1/1; border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+
+/* ---- CTA band ---- */
+.cta-band { position:relative; overflow:hidden; margin:2.5rem 0; padding:2.6rem 2rem; border-radius:var(--radius-lg); background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow-md); text-align:center; }
+.cta-band::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(600px 300px at 50% -40%, var(--accent-glow), transparent 60%); }
+.cta-band h2 { position:relative; z-index:1; margin:0 0 0.6rem; font-size:2rem; font-weight:800; letter-spacing:-0.025em; color:var(--text-strong); }
+.cta-band p { position:relative; z-index:1; margin:0 auto 1.6rem; color:var(--muted); max-width:50ch; font-size:1.02rem; }
+.cta-band .hero-cta { position:relative; z-index:1; justify-content:center; }
+
+/* ---- Footer ---- */
+.site-footer { margin-top:2rem; padding:2rem 0 calc(2rem + env(safe-area-inset-bottom, 0)); border-top:1px solid var(--hairline); color:var(--muted); }
+.footer-inner { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; }
+.footer-brand { display:inline-flex; align-items:center; gap:0.6rem; font-weight:700; color:var(--text-strong); }
+.footer-meta { font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; }
+.footer-social { display:flex; gap:0.5rem; }
+.footer-social a { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:9px; border:1px solid var(--border); color:var(--muted); background:var(--surface); transition:color 0.15s, border-color 0.15s; }
+.footer-social a:hover { color:var(--accent); border-color:var(--accent); }
+.footer-social svg { width:17px; height:17px; }
+
+@media (max-width: 780px) {
+  .hero { grid-template-columns:1fr; gap:1.8rem; padding:2.5rem 0 1.5rem; }
+  .hero-visual { max-width:380px; }
+  h1.hero-title { font-size:2.5rem; }
+}
+@media (max-width: 600px) {
+  body { font-size:15.5px; background-size:22px 22px; }
+  .container { padding:1rem; }
+  h1.hero-title { font-size:2.1rem; }
+  h2.section-title { font-size:1.6rem; }
+  .stats { grid-template-columns:1fr; }
+  .header-inner { padding-top:0.6rem; padding-bottom:0.6rem; }
+  nav a { padding:0.4rem 0.6rem; font-size:0.85rem; }
+  .brand-text { font-size:0.7rem; }
+  .cta-band { padding:2rem 1.2rem; }
+}
+@media (max-width: 380px) { .brand-text { display:none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
+</style>
+</head>
+<body>
+
+<!-- ================================================================= -->
+<!--  HEADER                                                            -->
+<!--  To use a real logo: replace the <span class="brand-mark"> block   -->
+<!--  with  <span class="brand-mark"><img src="logo.png" alt=""></span> -->
+<!-- ================================================================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="brand" aria-label="Home">
+      <span class="brand-mark" aria-hidden="true">
+        <!-- EDIT ME: drop in <img src="logo.png" alt="House of Misfits logo"> -->
+        <img src="img/HMLogoNew.png" alt="House of Misfits Logo"/>
+      </span>
+      <span class="brand-text">House&nbsp;of&nbsp;Misfits</span>
+    </a>
+    <div class="header-right">
+      <nav aria-label="Main">
+        <a href="#train">Train</a>
+        <a href="#coaches">Coaches</a>
+        <a href="#visit">Visit</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="top">
+
+  <!-- ================================================================= -->
+  <!--  HERO — the headline pitch. Edit the text between the tags.        -->
+  <!-- ================================================================= -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="hero-logo" aria-hidden="true">
+        <!-- EDIT ME: drop in <img src="logo.png" alt="House of Misfits logo"> -->
+        <img src="img/HMLogoNew.png" alt="House of Misfits Logo"/>
+      </span>
+      <span class="eyebrow">Pro Wrestling Training</span>
+      <h1 class="hero-title">Step into the <span class="accent">House&nbsp;of&nbsp;Misfits</span></h1>
+      <p class="hero-tagline">
+        <!-- EDIT ME: your one-line pitch -->
+        Where the outcasts become the main event. Learn to work the ring from
+        the ground up with hands-on coaching, real bumps, and a locker room that
+        has your back.
+      </p>
+      <div class="hero-cta">
+        <a href="#visit" class="btn btn-primary">Start Training</a>
+        <a href="#train" class="btn btn-ghost">See the Program</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!-- EDIT ME: replace the placeholder div's contents with
+           <img src="hero.jpg" alt="Wrestlers in the ring"> -->
+           
+      <div class="image-placeholder">
+        <!--<svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        -->
+        <img src="img/HM_Thumbnail.jpg" alt="House of Misfits Logo"/>
+          <span class="ph-label">Hero image</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!--  STATS — quick credibility numbers. Edit freely.                   -->
+  <!-- ================================================================= -->
+  <section class="stats">
+    <div class="stat"><div class="num"><span class="accent">2×</span></div><div class="label">Sessions / Week</div></div>
+    <div class="stat"><div class="num">All<span class="accent">.</span></div><div class="label">Levels Welcome</div></div>
+    <div class="stat"><div class="num">Pro<span class="accent">.</span></div><div class="label">Trained Coaches</div></div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!--  WHAT YOU LEARN                                                    -->
+  <!-- ================================================================= -->
+  <section class="section" id="train">
+    <div class="section-head">
+      <span class="eyebrow">The Program</span>
+      <h2 class="section-title">Everything you need to work a match</h2>
+      <p class="section-sub">From your first bump to your first main event — we build wrestlers, not just moves.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></div>
+        <h3>Fundamentals &amp; Bumps</h3>
+        <p>Ring positioning, chain wrestling, and safe bumping drilled until it's second nature.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Match Psychology</h3>
+        <p>Learn to tell a story in the ring — pacing, selling, and reading the crowd.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg></div>
+        <h3>Character &amp; Promos</h3>
+        <p>Find your gimmick and learn to cut a promo that gets the crowd on their feet.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Live Show Reps</h3>
+        <p>Get real in-ring experience on our shows once you're ready to step through the ropes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!--  COACHES — add / remove cards to match your roster.                -->
+  <!--  Add a photo: put <img src="coach.jpg" alt=""> inside .coach-avatar -->
+  <!-- ================================================================= -->
+  <section class="section" id="coaches">
+    <div class="section-head">
+      <span class="eyebrow">The Locker Room</span>
+      <h2 class="section-title">Coached by people who've done it</h2>
+      <p class="section-sub">Real ring veterans in your corner every session.</p>
+    </div>
+    <div class="coach-grid">
+      <div class="coach-card">
+        <div class="coach-avatar"><img src="img/Jimmy1.png"/><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <h3>Jimmy Lee</h3>
+        <div class="role">Head Trainer</div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-avatar"><img src="img/CodyPfp.jpg"/><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <h3>Cody McCulley</h3>
+        <div class="role">Co-Trainer</div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-avatar"><img src="img/TAWLogo.png"/><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <h3>Local Professionals</h3>
+        <div class="role">Guest Trainers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!--  GALLERY — drop photos into each placeholder.                      -->
+  <!-- ================================================================= -->
+  <section class="section" id="gallery">
+    <div class="section-head">
+      <span class="eyebrow">Inside the Ring</span>
+      <h2 class="section-title">See it for yourself</h2>
+    </div>
+    <div class="gallery">
+      <div class="image-placeholder"><img src="img/Gallery 1.png" /><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><img src="img/Gallery 2.png" /><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
+      <!--<div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
+      -->
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!--  CTA + VISIT — how to get in the door. Edit the details.           -->
+  <!-- ================================================================= -->
+  <section class="cta-band" id="visit">
+    <h2>Ready to take your first bump?</h2>
+    <p>New students train alongside the crew from day one. No experience needed — just show up ready to work.</p>
+    <div class="hero-cta">
+      <!-- EDIT ME: point this at your email, form, or booking link -->
+      <a href="https://forms.gle/LLxH2MT2GaBC5XwX9" class="btn btn-primary">Book a Trial Session</a>
+      <a href="#top" class="btn btn-ghost">Back to Top</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================================================================= -->
+<!--  FOOTER — edit address, hours, and social links.                   -->
+<!-- ================================================================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        House of Misfits Wrestling
+      </div>
+      <div class="footer-meta" style="margin-top:0.5rem;">
+        <!-- EDIT ME: address & hours -->
+        244 Livestock Rd, Eastanollee GA &nbsp;·&nbsp; Training: Tue / Fri 6:30PM-9PM
+      </div>
+    </div>
+    <div class="footer-social">
+      <!-- EDIT ME: real links -->
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+      <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></a>
+    </div>
+  </div>
+  <div class="container footer-meta" style="text-align:center; margin-top:1.5rem; opacity:0.7;">
+    © <span id="year"></span> House of Misfits · All rights reserved
+  </div>
+</footer>
+
+<script>
+  // Theme toggle — matches the trainee tracker behavior
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    function apply(theme) {
+      if (theme) { document.documentElement.setAttribute('data-theme', theme); }
+      else { document.documentElement.removeAttribute('data-theme'); }
+      var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-effective-theme', theme || (sysDark ? 'dark' : 'light'));
+    }
+    btn && btn.addEventListener('click', function () {
+      var cur = document.documentElement.getAttribute('data-effective-theme');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('tp-theme', next); } catch (e) {}
+      apply(next);
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>
