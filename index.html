@@ -155,6 +155,13 @@ h1.hero-title .accent { color:var(--accent); }
 .stat .num .accent { color:var(--accent); }
 .stat .label { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:0.2rem; }
 
+/* ---- Pricing strip ---- */
+.pricing { display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem; margin:0.5rem 0 3rem; }
+.price { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.2rem 1.3rem; box-shadow:var(--shadow-sm); }
+.price .num { font-size:2rem; font-weight:800; color:var(--text-strong); letter-spacing:-0.02em; }
+.price .num .accent { color:var(--accent); }
+.price .label { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:0.2rem; }
+
 /* ---- Section ---- */
 .section { padding:2.5rem 0; }
 .section-head { max-width:60ch; margin-bottom:1.8rem; }
@@ -273,7 +280,7 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
       </p>
       <div class="hero-cta">
         <a href="#visit" class="btn btn-primary">Start Training</a>
-        <a href="#train" class="btn btn-ghost">See the Program</a>
+        <a href="#gallery" class="btn btn-ghost">See the Program</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -281,7 +288,7 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
            <img src="hero.jpg" alt="Wrestlers in the ring"> -->
            
       <div class="image-placeholder">
-        <!--<svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <!--
         -->
         <img src="img/HM_Thumbnail.jpg" alt="House of Misfits Logo"/>
           <span class="ph-label">Hero image</span>
@@ -299,13 +306,27 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
   </section>
 
   <!-- ================================================================= -->
+  <!--  PRICING                                                           -->
+  <!-- ================================================================= -->
+  <div class="section-head">
+    <span class="eyebrow">The Cost</span>
+    <h2 class="section-title">Affordable training, professional results</h2>
+    <p class="section-sub">The House of Misfits aims to give you quality, professional trianing, without breaking the bank.</p>
+  </div>
+  <section class="pricing">
+    <div class="price"><div class="num"><span class="accent">$25</span></div><div class="label">Per Week</div></div>
+    <div class="price"><div class="num">OR<span class="accent">.</span></div><div class="label"></div></div>
+    <div class="price"><div class="num"><span class="accent">$75</span></div><div class="label">Per Month</div></div>
+  </section>
+
+  <!-- ================================================================= -->
   <!--  WHAT YOU LEARN                                                    -->
   <!-- ================================================================= -->
   <section class="section" id="train">
     <div class="section-head">
       <span class="eyebrow">The Program</span>
       <h2 class="section-title">Everything you need to work a match</h2>
-      <p class="section-sub">From your first bump to your first main event — we build wrestlers, not just moves.</p>
+      <p class="section-sub">From your first bump to your first main event, we build wrestlers, not just moves.</p>
     </div>
     <div class="feature-grid">
       <div class="feature-card">
@@ -316,7 +337,7 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
       <div class="feature-card">
         <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
         <h3>Match Psychology</h3>
-        <p>Learn to tell a story in the ring — pacing, selling, and reading the crowd.</p>
+        <p>Learn to tell a story in the ring: pacing, selling, and reading the crowd.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg></div>
@@ -343,17 +364,17 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
     </div>
     <div class="coach-grid">
       <div class="coach-card">
-        <div class="coach-avatar"><img src="img/Jimmy1.png"/><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <div class="coach-avatar"><img src="img/Jimmy1.png"/></div>
         <h3>Jimmy Lee</h3>
         <div class="role">Head Trainer</div>
       </div>
       <div class="coach-card">
-        <div class="coach-avatar"><img src="img/CodyPfp.jpg"/><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <div class="coach-avatar"><img src="img/CodyPfp.jpg"/></div>
         <h3>Cody McCulley</h3>
         <div class="role">Co-Trainer</div>
       </div>
       <div class="coach-card">
-        <div class="coach-avatar"><img src="img/TAWLogo.png"/><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <div class="coach-avatar"><img src="img/TAWLogo.png"/></div>
         <h3>Local Professionals</h3>
         <div class="role">Guest Trainers</div>
       </div>
@@ -369,13 +390,12 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
       <h2 class="section-title">See it for yourself</h2>
     </div>
     <div class="gallery">
-      <div class="image-placeholder"><img src="img/Gallery 1.png" /><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
-      <div class="image-placeholder"><img src="img/Gallery 2.png" /><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
-      <!--<div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
-      <div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
-      <div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
-      <div class="image-placeholder"><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="ph-label">Photo</span></div>
-      -->
+      <div class="image-placeholder"><img src="img/Gallery 1.png" /><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><img src="img/Gallery 2.png" /><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><img src="img/Gallery 3.jpg" /><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><img src="img/Gallery 4.jpg" /><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><img src="img/Gallery 5.jpg" /><span class="ph-label">Photo</span></div>
+      <div class="image-placeholder"><img src="img/Gallery 6.jpg" /><span class="ph-label">Photo</span></div>
     </div>
   </section>
 
@@ -384,7 +404,7 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
   <!-- ================================================================= -->
   <section class="cta-band" id="visit">
     <h2>Ready to take your first bump?</h2>
-    <p>New students train alongside the crew from day one. No experience needed — just show up ready to work.</p>
+    <p>New students train alongside the crew from day one. No experience needed, just show up ready to work.</p>
     <div class="hero-cta">
       <!-- EDIT ME: point this at your email, form, or booking link -->
       <a href="https://forms.gle/LLxH2MT2GaBC5XwX9" class="btn btn-primary">Book a Trial Session</a>
@@ -411,9 +431,9 @@ h2.section-title { font-size:2rem; margin:0.5rem 0 0.5rem; font-weight:700; lett
     </div>
     <div class="footer-social">
       <!-- EDIT ME: real links -->
-      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-      <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></a>
+      <a href="https://www.facebook.com/groups/3080440495461154" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="https://www.instagram.com/houseofmisfitswrestling/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+      <a href="mailto:houseofmisfitswrestling@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></a>
     </div>
   </div>
   <div class="container footer-meta" style="text-align:center; margin-top:1.5rem; opacity:0.7;">
